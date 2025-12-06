@@ -89,10 +89,10 @@ class CodeBlockInfoWidget extends WidgetType {
     const container = document.createElement('div');
     container.className = 'cm-code-block-info';
 
-    const langContainer = document.createElement('span');
-    langContainer.className = 'cm-code-block-lang-container';
-    langContainer.innerText = this.lang;
-    container.appendChild(langContainer);
+    const code = document.createElement('code');
+    code.className = 'cm-code-block-lang-container';
+    code.innerText = this.lang;
+    container.appendChild(code);
 
     const copyButton = document.createElement('button');
     copyButton.className = 'cm-code-block-copy-button';

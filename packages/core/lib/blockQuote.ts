@@ -15,10 +15,10 @@ class NestedBlockQuoteBorder extends WidgetType {
   }
 
   toDOM() {
-    const span = document.createElement('span');
-    span.className = 'cm-nested-blockquote-border';
-    span.style = `--blockquote-border-offset: ${this.offset.toString()}px`;
-    return span;
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'cm-nested-blockquote-border';
+    blockquote.style = `--blockquote-border-offset: ${this.offset.toString()}px`;
+    return blockquote;
   }
 
   ignoreEvent(_event: Event) {
