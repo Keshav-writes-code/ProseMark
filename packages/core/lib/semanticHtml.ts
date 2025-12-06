@@ -9,6 +9,8 @@ import {
 } from '@codemirror/view';
 
 // Mapping of node names to heading levels
+// Note: CodeMirror uses <div class="cm-line"> elements, so we apply ARIA roles
+// to provide semantic meaning to assistive technologies without breaking the editor
 const headingLevels: Record<string, string> = {
   ATXHeading1: '1',
   ATXHeading2: '2',
@@ -43,7 +45,7 @@ const semanticHtmlDecorations = (view: EditorView) => {
         }
         // Handle paragraphs
         else if (node.name === 'Paragraph') {
-          // Only add paragraph role if line is fully within this paragraph
+          // Only add paragraph role if the paragraph contains the entire line
           if (node.from <= line.from && node.to >= line.to) {
             builder.add(
               line.from,
