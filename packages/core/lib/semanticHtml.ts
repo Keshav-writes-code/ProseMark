@@ -8,6 +8,18 @@ import {
   type DecorationSet,
 } from '@codemirror/view';
 
+// Mapping of node names to heading levels
+const headingLevels: Record<string, string> = {
+  ATXHeading1: '1',
+  ATXHeading2: '2',
+  ATXHeading3: '3',
+  ATXHeading4: '4',
+  ATXHeading5: '5',
+  ATXHeading6: '6',
+  SetextHeading1: '1',
+  SetextHeading2: '2',
+};
+
 const semanticHtmlDecorations = (view: EditorView) => {
   const builder = new RangeSetBuilder<Decoration>();
 
@@ -18,56 +30,15 @@ const semanticHtmlDecorations = (view: EditorView) => {
       enter: (node) => {
         const line = view.state.doc.lineAt(node.from);
 
-        // Handle ATX headings (# Heading)
-        if (node.name === 'ATXHeading1') {
+        // Handle headings (both ATX and Setext)
+        const headingLevel = headingLevels[node.name];
+        if (headingLevel) {
           builder.add(
             line.from,
             line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '1' } }),
-          );
-        } else if (node.name === 'ATXHeading2') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '2' } }),
-          );
-        } else if (node.name === 'ATXHeading3') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '3' } }),
-          );
-        } else if (node.name === 'ATXHeading4') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '4' } }),
-          );
-        } else if (node.name === 'ATXHeading5') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '5' } }),
-          );
-        } else if (node.name === 'ATXHeading6') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '6' } }),
-          );
-        }
-        // Handle Setext headings (underlined headings)
-        else if (node.name === 'SetextHeading1') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '1' } }),
-          );
-        } else if (node.name === 'SetextHeading2') {
-          builder.add(
-            line.from,
-            line.from,
-            Decoration.line({ attributes: { role: 'heading', 'aria-level': '2' } }),
+            Decoration.line({
+              attributes: { role: 'heading', 'aria-level': headingLevel },
+            }),
           );
         }
         // Handle paragraphs
