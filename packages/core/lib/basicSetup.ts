@@ -40,6 +40,7 @@ import {
 } from './syntaxHighlighting';
 import { softIndentExtension } from './softIndentExtension';
 import { revealBlockOnArrowExtension } from './revealBlockOnArrow';
+import { semanticHtmlExtension } from './semanticHtml';
 
 export const prosemarkMarkdownSyntaxExtensions = [
   additionalMarkdownSyntaxTags,
@@ -57,6 +58,7 @@ export const prosemarkBasicSetup = (): Extension => [
   defaultClickLinkHandler,
   softIndentExtension,
   codeBlockDecorationsExtension,
+  semanticHtmlExtension,
 
   // Basic CodeMirror Setup
   history(),
